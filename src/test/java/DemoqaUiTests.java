@@ -1,34 +1,22 @@
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
+import static com.demoqa.ConfigFileReader.getProperty;
 
-public class DemoqaUiTests {
-    WebDriver driver;
 
-    public static final String BASIC_URL = "https://demoqa.com/";
+public class DemoqaUiTests extends BaseTest {
 
-    @BeforeEach
-    void setup() {
-        driver = new FirefoxDriver();
-    }
-
-    @AfterEach
-    void exit() {
-        driver.close();
-    }
 
     @Test
     @DisplayName("Check that button appears after five seconds on page")
     void waitForButtonAppearsTest() {
-        driver.get(BASIC_URL + "dynamic-properties");
+        driver.get(getProperty("base.url") + "dynamic-properties");
         var buttonAfterFiveSec = waitTillDisplayed(By.id("visibleAfter"), Duration.ofSeconds(5));
         boolean condition = buttonAfterFiveSec.isDisplayed();
         Assertions.assertTrue(condition);
@@ -43,11 +31,11 @@ public class DemoqaUiTests {
     @Test
     @DisplayName("Check that progress bar show 100%")
     void hundredPercentOnProgressBarTest() {
-        driver.get(BASIC_URL + "progress-bar");
+        driver.get(getProperty("base.url") + "progress-bar");
         var startStopButton = driver.findElement(By.id("startStopButton"));
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].click()", startStopButton);
-        waitTillDisplayed(By.id("resetButton"), Duration.ofSeconds(12));
+        waitTillDisplayed(By.id("resetButton"), Duration.ofSeconds(13));
         var hundredPercent = driver.findElement(By.className("progress")).getText();
         Assertions.assertEquals("100%", hundredPercent);
     }
@@ -55,7 +43,7 @@ public class DemoqaUiTests {
     @Test
     @DisplayName("Check that button change the colour after five seconds")
     void changeColourTest() {
-        driver.get(BASIC_URL + "dynamic-properties");
+        driver.get(getProperty("base.url") + "dynamic-properties");
         var basicColor = getColorValue(By.id("colorChange"));
         waitTillDisplayed(By.id("visibleAfter"), Duration.ofSeconds(5));
         var afterFiveSecColor = getColorValue(By.id("colorChange"));

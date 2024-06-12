@@ -1,6 +1,5 @@
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -9,7 +8,7 @@ import java.time.Duration;
 
 import static com.demoqa.ConfigFileReader.getProperty;
 
-public class DemoqaActionAndIframeTest {
+public class DemoqaActionAndIframeTest extends BaseTest {
 
     public static final String PARENT_FRAME_ID = "frame1";
     public static final String PARENT_TITLE_LOCATOR = "body";
@@ -23,17 +22,7 @@ public class DemoqaActionAndIframeTest {
     public static final String NOT_REVERTABLE_BOX = "#droppableExample-tabpane-revertable #notRevertable";
     public static final String DROP_BOX_TITLE = "#droppableExample-tabpane-revertable #droppable";
     public static final String STYLE = "style";
-    static WebDriver driver;
 
-    @BeforeAll
-    static void setUp() {
-        driver = new FirefoxDriver();
-    }
-
-    @AfterAll
-    static void quit() {
-        driver.close();
-    }
 
     @Test
     @DisplayName("Check that one drag box is automatically reverted to the origin, but second isn't reverted")
@@ -96,7 +85,7 @@ public class DemoqaActionAndIframeTest {
 
     }
 
-    public String getFrameTitle(By locator) {
+    public String  getFrameTitle(By locator) {
         return driver.findElement(locator).getText();
     }
 
